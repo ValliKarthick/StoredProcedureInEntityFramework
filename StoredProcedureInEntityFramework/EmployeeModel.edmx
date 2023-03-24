@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EMPLOYEESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmployeePersonalDetails">
+          <Key>
+            <PropertyRef Name="employee_number" />
+          </Key>
+          <Property Name="employee_number" Type="int" Nullable="false" />
+          <Property Name="last_name" Type="char" MaxLength="50" />
+          <Property Name="first_name" Type="char" MaxLength="50" />
+        </EntityType>
+        <Function Name="d_DeleteEmployee_p" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeNo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="s_InsertEmployee_p" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeNo" Type="int" Mode="In" />
+          <Parameter Name="EmployeeFName" Type="varchar" Mode="In" />
+          <Parameter Name="EmployeeLName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="u_UpdateEmployee_p" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeNo" Type="int" Mode="In" />
+          <Parameter Name="EmployeeFName" Type="varchar" Mode="In" />
+          <Parameter Name="EmployeeLName" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EMPLOYEESModelStoreContainer">
+          <EntitySet Name="EmployeePersonalDetails" EntityType="Self.EmployeePersonalDetails" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EMPLOYEESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EmployeePersonalDetail">
+          <Key>
+            <PropertyRef Name="employee_number" />
+          </Key>
+          <Property Name="employee_number" Type="Int32" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="EMPLOYEESEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmployeePersonalDetails" EntityType="Self.EmployeePersonalDetail" />
+          <FunctionImport Name="d_DeleteEmployee_p">
+            <Parameter Name="EmployeeNo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="s_InsertEmployee_p">
+            <Parameter Name="EmployeeNo" Mode="In" Type="Int32" />
+            <Parameter Name="EmployeeFName" Mode="In" Type="String" />
+            <Parameter Name="EmployeeLName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="u_UpdateEmployee_p">
+            <Parameter Name="EmployeeNo" Mode="In" Type="Int32" />
+            <Parameter Name="EmployeeFName" Mode="In" Type="String" />
+            <Parameter Name="EmployeeLName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EMPLOYEESModelStoreContainer" CdmEntityContainer="EMPLOYEESEntities">
+          <EntitySetMapping Name="EmployeePersonalDetails">
+            <EntityTypeMapping TypeName="EMPLOYEESModel.EmployeePersonalDetail">
+              <MappingFragment StoreEntitySet="EmployeePersonalDetails">
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="EMPLOYEESModel.EmployeePersonalDetail">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="EMPLOYEESModel.Store.s_InsertEmployee_p" >
+                  <ScalarProperty Name="last_name" ParameterName="EmployeeLName" />
+                  <ScalarProperty Name="first_name" ParameterName="EmployeeFName" />
+                  <ScalarProperty Name="employee_number" ParameterName="EmployeeNo" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="EMPLOYEESModel.Store.u_UpdateEmployee_p" >
+                  <ScalarProperty Name="last_name" ParameterName="EmployeeLName" Version="Current" />
+                  <ScalarProperty Name="first_name" ParameterName="EmployeeFName" Version="Current" />
+                  <ScalarProperty Name="employee_number" ParameterName="EmployeeNo" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="EMPLOYEESModel.Store.d_DeleteEmployee_p" >
+                  <ScalarProperty Name="employee_number" ParameterName="EmployeeNo" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="d_DeleteEmployee_p" FunctionName="EMPLOYEESModel.Store.d_DeleteEmployee_p" />
+          <FunctionImportMapping FunctionImportName="s_InsertEmployee_p" FunctionName="EMPLOYEESModel.Store.s_InsertEmployee_p" />
+          <FunctionImportMapping FunctionImportName="u_UpdateEmployee_p" FunctionName="EMPLOYEESModel.Store.u_UpdateEmployee_p" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
